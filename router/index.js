@@ -27,8 +27,7 @@ router.get('/api/categories',authenticateUser, getCategories)
 router.put('/api/categories/:id', updateCategory)
 router.delete('/api/categories/:id', deleteCategory)
 router.get('/favorites', authenticateUser, getAllFavorites);
-router.get('/note/:id', getSingleNote);
-
+router.get('/notes/:id', authenticateUser, getSingleNote);
 //router.get("/product/:id",verifyToken,findProduct);
 
 // router.get("/search/:key",verifyToken,Search)
