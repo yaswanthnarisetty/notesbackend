@@ -141,19 +141,42 @@ export const register = async (req, res) => {
   }
 };
 
-export function verifyToken(req, res, next) {
-  let token = req.headers["authorization"];
-  if (token) {
-    Jwt.verify(token, jwtKey, (err, valid) => {
-      if (err) {
-        res.send("please enter a valid token");
-      } else {
-        req.role = valid.role;
-        req.userId = valid._id;
-        next();
-      }
-    });
-  } else {
-    res.send("please add a token");
+export const authenticateUser = (req, res, next) => {
+  // Get the token from the Authorization header
+  const token = req.headers.authorization?.split(' ')[1]; // Bearer <token>
+  
+  if (!token) {
+    return res.status(401).json({ error: 'Unauthorized, token is missing' });
   }
-}
+
+  try {
+    // Verify the token using the secret key
+    const decoded = Jwt.verify(token, jwtKey);
+    
+    // Attach the decoded user information (user ID) to req.user
+    req.user = decoded;
+    
+    // Proceed to the next middleware/controller
+    next();
+  } catch (err) {
+    console.error("Token verification failed:", err);
+    res.status(401).json({ error: 'Invalid or expired token' });
+  }
+};
+
+// export function verifyToken(req, res, next) {
+//   let token = req.headers["authorization"];
+//   if (token) {
+//     Jwt.verify(token, jwtKey, (err, valid) => {
+//       if (err) {
+//         res.send("please enter a valid token");
+//       } else {
+//         req.role = valid.role;
+//         req.userId = valid._id;
+//         next();
+//       }
+//     });
+//   } else {
+//     res.send("please add a token");
+//   }
+// }
