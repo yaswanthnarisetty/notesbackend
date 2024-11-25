@@ -142,3 +142,29 @@ export const getAllFavorites = async (req, res) => {
   }
 };
 
+// Get a single note by ID
+export const getSingleNote = async (req, res) => {
+  try {
+    const noteId = req.params.id;
+
+    // Validate note ID
+    if (!mongoose.Types.ObjectId.isValid(noteId)) {
+      return res.status(400).json({ error: 'Invalid note ID' });
+    }
+
+    // Fetch the note and populate the category to ensure it belongs to the logged-in user
+    const note = await Note.findOne({ _id: noteId }).populate('category');
+
+    // Check if the note exists and belongs to the logged-in user
+    if (!note || note.category.user.toString() !== req.user._id) {
+      return res.status(404).json({ error: 'Note not found or unauthorized' });
+    }
+
+    // Return the note details
+    res.status(200).json(note);
+  } catch (err) {
+    console.error("Error fetching note:", err);
+    res.status(500).json({ error: 'Error fetching note' });
+  }
+};
+

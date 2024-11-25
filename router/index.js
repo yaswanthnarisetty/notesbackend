@@ -1,6 +1,6 @@
 import express from "express"
 const router = express.Router()
-import { createNote,editNote,deleteNote,getNotesByCategory,toggleFavoriteStatus, getAllFavorites } from "../controllers/noteController.js";
+import { createNote,editNote,deleteNote,getNotesByCategory,toggleFavoriteStatus, getAllFavorites, getSingleNote } from "../controllers/noteController.js";
 // import {Search} from "../controllers/searchController.js";
 import {login,register,authenticateUser} from "../controllers/authController.js";
 import { createCategory,getSingleCategory,getCategories,updateCategory,deleteCategory } from "../controllers/categoryController.js";
@@ -27,7 +27,7 @@ router.get('/api/categories',authenticateUser, getCategories)
 router.put('/api/categories/:id', updateCategory)
 router.delete('/api/categories/:id', deleteCategory)
 router.get('/favorites', authenticateUser, getAllFavorites);
-
+router.get('/note/:id', getSingleNote);
 
 //router.get("/product/:id",verifyToken,findProduct);
 
