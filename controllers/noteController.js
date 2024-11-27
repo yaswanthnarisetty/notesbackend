@@ -44,7 +44,7 @@ export const createNote = async (req, res) => {
 // Edit a note
 export const editNote = async (req, res) => {
   try {
-    const { name, content, categoryId } = req.body;
+    const { name, content, categoryId,isFavorite } = req.body;
 
     // Check if the note exists and belongs to the logged-in user
     const note = await Note.findOne({ _id: req.params.id }).populate('category');
@@ -56,6 +56,7 @@ export const editNote = async (req, res) => {
     note.name = name;
     note.content = content;
     note.category = categoryId || note.category;
+    note.isFavorite=isFavorite
 
     await note.save();
     res.status(200).json(note);
