@@ -19,13 +19,13 @@ router.put('/api/notes/:id',authenticateUser, editNote)
 router.delete('/api/notes/:id',authenticateUser, deleteCategory)
 //GET /api/notes?category=:categoryId
 router.get('/api/notes/category/:categoryId',authenticateUser, getNotesByCategory)
-router.patch('/api/notes/:id/favorite', toggleFavoriteStatus)
+router.patch('/api/notes/:id/favorite',authenticateUser, toggleFavoriteStatus)
 
 router.post('/api/categories',authenticateUser,createCategory)
 router.get('/api/categories/:id',authenticateUser, getSingleCategory)
 router.get('/api/categories',authenticateUser, getCategories)
-router.put('/api/categories/:id', updateCategory)
-router.delete('/api/categories/:id', deleteCategory)
+router.put('/api/categories/:id',authenticateUser, updateCategory)
+router.delete('/api/categories/:id',authenticateUser, deleteCategory)
 router.get('/favorites', authenticateUser, getAllFavorites);
 router.get('/notes/:id', authenticateUser, getSingleNote);
 //router.get("/product/:id",verifyToken,findProduct);
