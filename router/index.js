@@ -16,7 +16,7 @@ router.post("/login",login );
 
 router.post('/api/notes',authenticateUser,createNote)
 router.put('/api/notes/:id',authenticateUser, editNote)
-router.delete('/api/notes/:id',authenticateUser, deleteCategory)
+router.delete('/api/notes/:id',authenticateUser, deleteNote)
 //GET /api/notes?category=:categoryId
 router.get('/api/notes/category/:categoryId',authenticateUser, getNotesByCategory)
 router.patch('/api/notes/:id/favorite',authenticateUser, toggleFavoriteStatus)
